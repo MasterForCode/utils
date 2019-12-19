@@ -10,6 +10,12 @@ import java.util.function.BiConsumer;
  * @date 2019/12/18
  */
 public class Iterables {
+    /**
+     * 为List的forEach添加下标
+     * @param elements
+     * @param action
+     * @param <E>
+     */
     public static <E> void forEach(Iterable<? extends E> elements, BiConsumer<Integer, ? super E> action) {
         Objects.requireNonNull(elements);
         Objects.requireNonNull(action);
@@ -20,6 +26,13 @@ public class Iterables {
         }
     }
 
+    /**
+     * 为Map的forEach添加下标
+     * @param elements
+     * @param action
+     * @param <K>
+     * @param <V>
+     */
     public static <K, V> void forEach(Map<K, V> elements, MapFunction<Integer, ? super K, ? super V> action) {
         Objects.requireNonNull(elements);
         Objects.requireNonNull(action);
