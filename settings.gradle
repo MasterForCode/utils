@@ -1,4 +1,6 @@
 rootProject.name = 'utils'
 include 'poi'
 include 'groovy'
+include 'ssh'
+include 'ip'
 

@@ -30,4 +30,12 @@ public class ObjectUtils {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.convertValue(obj,  objectMapper.getTypeFactory().constructParametricType(Map.class, String.class, Object.class));
     }
+
+    public static <T> List<T> listRequireNonNull(List<T> data) {
+        if (data == null || data.size() == 0) {
+            throw new NullPointerException();
+        } else {
+            return data;
+        }
+    }
 }
