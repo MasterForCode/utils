@@ -1,8 +1,6 @@
 package top.soliloquze.base;
 
-import java.util.ConcurrentModificationException;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.BiConsumer;
 
 /**
@@ -12,9 +10,9 @@ import java.util.function.BiConsumer;
 public class Iterables {
     /**
      * 为List的forEach添加下标
-     * @param elements
-     * @param action
-     * @param <E>
+     * @param elements 可迭代对象
+     * @param action BiConsumer
+     * @param <E> E
      */
     public static <E> void forEach(Iterable<? extends E> elements, BiConsumer<Integer, ? super E> action) {
         Objects.requireNonNull(elements);
@@ -28,10 +26,10 @@ public class Iterables {
 
     /**
      * 为Map的forEach添加下标
-     * @param elements
-     * @param action
-     * @param <K>
-     * @param <V>
+     * @param elements Map
+     * @param action MapFunction
+     * @param <K> K
+     * @param <V> V
      */
     public static <K, V> void forEach(Map<K, V> elements, MapFunction<Integer, ? super K, ? super V> action) {
         Objects.requireNonNull(elements);
@@ -51,4 +49,5 @@ public class Iterables {
             action.accept(index++, k, v);
         }
     }
+
 }
