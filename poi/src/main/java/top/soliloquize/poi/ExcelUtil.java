@@ -20,7 +20,7 @@ import java.util.Map;
  * @author wb
  * @date 2019/12/18
  */
-public class PoiUtils {
+public class ExcelUtil {
     public static void main(String[] args) throws IOException {
         XSSFWorkbook workbook = init();
 
@@ -271,7 +271,7 @@ public class PoiUtils {
      * @param suffix 文件后缀
      * @return boolean
      */
-    private static boolean validatorSuffix(String suffix) {
+    public static boolean validatorSuffix(String suffix) {
         return suffix.equals(Const.XLSX) || suffix.equals(Const.XLSM) || suffix.equals(Const.XLSB)
                 || suffix.equals(Const.XLTX) || suffix.equals(Const.XLTM) || suffix.equals(Const.XLS)
                 || suffix.equals(Const.XLA) || suffix.equals(Const.XLAM) || suffix.equals(Const.XLR) ||
