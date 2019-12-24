@@ -10,6 +10,7 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.element.Text;
+import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.VerticalAlignment;
 import top.soliloquze.base.ObjectUtils;
@@ -82,6 +83,8 @@ public class PdfUtil {
             throw new RuntimeException("列数不能等于0");
         }
         Table table = new Table(columnSize);
+        // pdf 页面居中
+        table.setHorizontalAlignment(HorizontalAlignment.CENTER);
         return table;
     }
 
@@ -94,7 +97,7 @@ public class PdfUtil {
     public static void fillData(Table table, List<String> data) {
         Objects.requireNonNull(table);
         ObjectUtils.listRequireNonNull(data);
-        data.stream().map(each -> new Paragraph(new Text(each).setFont(PdfUtil.pdfFont))).forEach(table::addCell);
+        data.stream().map(each -> new Paragraph(new Text(each).setFont(PdfUtil.pdfFont)).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE)).forEach(table::addCell);
     }
 
     /**

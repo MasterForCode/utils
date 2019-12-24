@@ -3,19 +3,20 @@ package top.soliloquize.poi;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.property.HorizontalAlignment;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import top.soliloquze.base.Iterables;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author wb
@@ -75,14 +76,18 @@ public class Excel2PdfUtil {
      */
     public static Sheet getSheetByIndex(Workbook workbook, int index) {
         Objects.requireNonNull(workbook);
-        if (index <= 0) {
+        if (index < 0) {
             throw new RuntimeException("sheet下标不能小于0");
         }
         return workbook.getSheetAt(index);
     }
 
     public static void main(String[] args) throws IOException {
-        excel2Pdf("/test.xlsx", "test.pdf", 4);
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, 4);
+        map.put(1, 3);
+        map.put(2, 3);
+        excel2Pdf("/test.xlsx", "test.pdf", map);
     }
 
     /**
@@ -90,54 +95,28 @@ public class Excel2PdfUtil {
      *
      * @param excelFilePath excel路径
      * @param pdfFilePath   pdf路径
-     * @param maxColumnSize 最大列数
+     * @param sheetColumn   所要转化的每个sheet对应的最大列数
      * @return pdf文件
      * @throws IOException IOException
      */
-    public static File excel2Pdf(String excelFilePath, String pdfFilePath, int maxColumnSize) throws IOException {
+    public static File excel2Pdf(String excelFilePath, String pdfFilePath, Map<Integer, Integer> sheetColumn) throws IOException {
         Objects.requireNonNull(excelFilePath);
         Objects.requireNonNull(pdfFilePath);
-        if (maxColumnSize <= 0) {
-            throw new RuntimeException("列数不能等于0");
+        if (!MapUtils.isNotEmpty(sheetColumn)) {
+            throw new RuntimeException("sheet的最大列不能为空");
         }
         Workbook workbook = initWorkbook(excelFilePath);
         File file = PdfUtil.initFile(pdfFilePath);
         Document document = PdfUtil.initPdfPage(PageSize.A4, false, file);
-        int sheetNum = workbook.getNumberOfSheets();
-        for (int i = 0; i < sheetNum; i++) {
-            Table table = PdfUtil.initTable(maxColumnSize);
-            action(getSheetByIndex(workbook, i), maxColumnSize).forEach(each -> PdfUtil.fillData(table, each));
-            PdfUtil.fillDoc(document, table);
-        }
+        Iterables.forEach(sheetColumn, (index, k, v) -> {
+            if (index < workbook.getNumberOfSheets()) {
+                Table table = PdfUtil.initTable(v);
+                action(getSheetByIndex(workbook, k), v).forEach(each -> PdfUtil.fillData(table, each));
+                PdfUtil.fillDoc(document, table);
+            }
+        });
         document.close();
         return file;
-    }
-
-    /**
-     * excel转pdf
-     *
-     * @param excelFile excel文件
-     * @param pdfFile   pdf文件
-     * @param maxColumnSize 最大列数
-     * @return pdf文件
-     * @throws IOException IOException
-     */
-    public static File excel2Pdf(File excelFile, File pdfFile, int maxColumnSize) throws IOException {
-        Objects.requireNonNull(excelFile);
-        Objects.requireNonNull(pdfFile);
-        if (maxColumnSize <= 0) {
-            throw new RuntimeException("列数不能等于0");
-        }
-        Workbook workbook = initWorkbook(excelFile);
-        Document document = PdfUtil.initPdfPage(PageSize.A4, false, pdfFile);
-        int sheetNum = workbook.getNumberOfSheets();
-        for (int i = 0; i < sheetNum; i++) {
-            Table table = PdfUtil.initTable(maxColumnSize);
-            action(getSheetByIndex(workbook, i), maxColumnSize).forEach(each -> PdfUtil.fillData(table, each));
-            PdfUtil.fillDoc(document, table);
-        }
-        document.close();
-        return pdfFile;
     }
 
     /**
