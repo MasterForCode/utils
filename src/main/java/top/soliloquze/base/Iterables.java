@@ -51,12 +51,25 @@ public class Iterables {
         }
     }
 
-    public static <E> E findFirst(Iterable<? extends E> elements, Predicate<E> action) {
+    public static <E> E findFirst(Iterable<E> elements, Predicate<E> test) {
+        Objects.requireNonNull(elements);
+        Objects.requireNonNull(test);
         for (E e: elements) {
-            if (action.test(e)) {
+            if (test.test(e)) {
                 return e;
             }
         }
         return null;
+    }
+
+    public static <E> boolean contain(Iterable<? extends E> elements, Predicate<E> test) {
+        Objects.requireNonNull(elements);
+        Objects.requireNonNull(test);
+        for (E e: elements) {
+            if (test.test(e)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -12,7 +12,18 @@ import java.lang.reflect.Method;
 @Data
 @Builder
 public class ColumnBean {
-    String paramType;
+    /**
+     * get时是返回值类型
+     * set时是参数类型
+     */
+    String type;
     Integer columnIndex;
+    /**
+     * get或set方法
+     */
     Method method;
+    /**
+     * 字段名
+     */
+    String fieldName;
 }

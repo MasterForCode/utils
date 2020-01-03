@@ -1,5 +1,6 @@
 package top.soliloquize.poi;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.lang.reflect.Field;
@@ -10,10 +11,12 @@ import java.util.Date;
  * @date 2019/12/18
  */
 @Data
+@Builder
 public class User {
     private String name;
     private Double age;
     private String height;
+    private Date date;
 //
 //    public String getName() {
 //        return name;
