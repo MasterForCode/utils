@@ -2,6 +2,7 @@ package top.soliloquze.base;
 
 import java.util.*;
 import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 
 /**
  * @author wb
@@ -50,4 +51,12 @@ public class Iterables {
         }
     }
 
+    public static <E> E findFirst(Iterable<? extends E> elements, Predicate<E> action) {
+        for (E e: elements) {
+            if (action.test(e)) {
+                return e;
+            }
+        }
+        return null;
+    }
 }

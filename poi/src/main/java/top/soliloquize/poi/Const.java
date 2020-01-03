@@ -5,6 +5,7 @@ package top.soliloquize.poi;
  * @date 2019/12/19
  */
 public interface Const {
+    String DOT = ".";
     String XLSX = "xlsx";
     String XLSM = "xlsm";
     String XLSB = "xlsb";
