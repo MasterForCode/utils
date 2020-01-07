@@ -1,4 +1,4 @@
-package top.soliloquize.password.poi;
+package top.soliloquize.poi;
 
 import lombok.Builder;
 import lombok.Data;

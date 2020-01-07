@@ -1,4 +1,4 @@
-package top.soliloquize.password.captcha;
+package top.soliloquize.captcha;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package top.soliloquize.password.poi;
+package top.soliloquize.poi;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.Data;

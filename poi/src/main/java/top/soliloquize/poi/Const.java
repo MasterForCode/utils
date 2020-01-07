@@ -1,4 +1,4 @@
-package top.soliloquize.password.poi;
+package top.soliloquize.poi;
 
 /**
  * @author wb

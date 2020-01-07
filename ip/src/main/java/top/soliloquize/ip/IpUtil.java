@@ -1,4 +1,4 @@
-package top.soliloquize.password.ip;
+package top.soliloquize.ip;
 
 import java.math.BigInteger;
 

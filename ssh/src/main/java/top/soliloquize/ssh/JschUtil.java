@@ -1,4 +1,4 @@
-package top.soliloquize.password.ssh;
+package top.soliloquize.ssh;
 
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
