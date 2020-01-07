@@ -1,4 +1,4 @@
-package top.soliloquize.groovy;
+package top.soliloquize.password.groovy;
 
 
 import groovy.lang.*;

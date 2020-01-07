@@ -3,4 +3,6 @@ include 'poi'
 include 'groovy'
 include 'ssh'
 include 'ip'
+include 'captcha'
+include 'password'
 

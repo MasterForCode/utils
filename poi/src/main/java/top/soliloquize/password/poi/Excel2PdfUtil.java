@@ -1,4 +1,4 @@
-package top.soliloquize.poi;
+package top.soliloquize.password.poi;
 
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.layout.Document;
