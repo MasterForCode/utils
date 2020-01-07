@@ -3,11 +3,17 @@ package top.soliloquize.password;
 
 import top.soliloquze.base.StringUtils;
 
+import java.util.Objects;
+
 /**
  * @author wb
  * @date 2020/1/6
  */
-public class CheckPassword {
+public class TestPassword {
+    /**
+     * 大小写字母,数字,特殊字符,8位
+     */
+    private static final String TEST_NORMAL = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$";
 
     /**
      * 数字
@@ -266,6 +272,14 @@ public class CheckPassword {
             default:
                 return Level.EXTREMELY_STRONG;
         }
+    }
+
+    public static boolean testPassword(String password, String pattern) {
+        Objects.requireNonNull(password);
+        if (org.apache.commons.lang3.StringUtils.isBlank(pattern)) {
+            password = TestPassword.TEST_NORMAL;
+        }
+        return password.matches(pattern);
     }
 
 
