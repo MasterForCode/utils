@@ -23,6 +23,7 @@ public enum  SchedulerWrapper {
     static {
         try {
             scheduler = StdSchedulerFactory.getDefaultScheduler();
+            scheduler.start();
         } catch (SchedulerException e) {
             throw new RuntimeException(e);
         }
@@ -49,7 +50,6 @@ public enum  SchedulerWrapper {
         }
         try {
             scheduler.scheduleJob(job, trigger);
-            scheduler.start();
         } catch (SchedulerException e) {
             throw new RuntimeException(e);
         }
