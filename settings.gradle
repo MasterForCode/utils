@@ -5,4 +5,5 @@ include 'ssh'
 include 'ip'
 include 'captcha'
 include 'password'
+include 'job'
 

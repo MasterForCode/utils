@@ -63,52 +63,31 @@ public class FutureUtils {
     }
 
     public static void main(String[] args) {
-        // Generate data
-        int arraySize = 32768;
-        int[] data = new int[arraySize];
-
-        Random rnd = new Random(0);
-        for (int c = 0; c < arraySize; ++c) {
-            data[c] = rnd.nextInt() % 256;
-        }
-
-        // !!! With this, the next loop runs faster
-//        Arrays.sort(data);
-
-        // Test
-        long start = System.nanoTime();
-        long sum = 0;
-
-//        for (int i = 0; i < 100000; ++i)
-//        {
-//            // Primary loop
-//            for (int c = 0; c < arraySize; ++c)
-//            {
-////                if (data[c] >= 128) {
-//                    sum += data[c];
-////                }
-//            }
-//        }
-//        for (int i = 0; i < 100000; ++i)
-//        {
-//            for (int j = 0; j < arraySize; ++j)
-//            {
-//                if (data[j] >= 128) {
-//                    sum += data[j];
-//                }
-//            }
-//        }
-//        for (int j = 0; j < arraySize; ++j)
-//        {
-//            for (int i = 0; i < 100000; ++i)
-//            {
-//                if (data[j] >= 128) {
-//                    sum += data[j];
-//                }
-//            }
-//        }
-
-        System.out.println((System.nanoTime() - start) / 1000000000.0);
-        System.out.println("sum = " + sum);
+        CompletableFuture<String> future1 = CompletableFuture.supplyAsync(() -> {
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return "future1";
+        });
+        CompletableFuture<String> future2 = CompletableFuture.supplyAsync(() -> {
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return "future2";
+        });
+        CompletableFuture<String> future3 = CompletableFuture.supplyAsync(() -> {
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return "future3";
+        });
+        List<String> result = allOf(Arrays.asList(future1, future2, future3), 4, TimeUnit.SECONDS);
+        result.forEach(System.out::println);
     }
 }
