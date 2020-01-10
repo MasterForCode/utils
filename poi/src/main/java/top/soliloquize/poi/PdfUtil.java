@@ -73,7 +73,7 @@ public class PdfUtil {
     }
 
     /**
-     * 舒适化页面数据列
+     * 初始化页面数据列
      *
      * @param columnSize 列数
      * @return Table
@@ -98,6 +98,7 @@ public class PdfUtil {
         Objects.requireNonNull(table);
         ObjectUtils.listRequireNonNull(data);
         data.stream().map(each -> new Paragraph(new Text(each).setFont(PdfUtil.pdfFont)).setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE)).forEach(table::addCell);
+        actionTable(table);
     }
 
     /**
@@ -113,6 +114,7 @@ public class PdfUtil {
         Objects.requireNonNull(font);
 
         data.stream().map(each -> new Paragraph(new Text(each).setFont(font))).forEach(table::addCell);
+        actionTable(table);
 
     }
 
@@ -193,6 +195,10 @@ public class PdfUtil {
         Objects.requireNonNull(verticalAlignment);
         document.showTextAligned(new Paragraph(content)
                 .setFont(PdfUtil.pdfFont).setFontSize(PdfUtil.fontSize), x, document.getPdfDocument().getPage(1).getPageSize().getBottom() + margin, pageIndex, textAlignment, verticalAlignment, 0);
+    }
+
+    public static void actionTable(Table table) {
+        table.flush();
     }
 
 }

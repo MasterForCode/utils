@@ -5,8 +5,9 @@ import lombok.Data;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.streaming.SXSSFSheet;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import top.soliloquze.base.FormatUtils;
 import top.soliloquze.base.Iterables;
@@ -34,7 +35,7 @@ public class ExcelUtil {
 
     private Function<Date, String> date2StringFunction = FormatUtils::date2String;
 
-    private XSSFWorkbook xssfWorkbook;
+    private SXSSFWorkbook sXSSFWorkbook;
 
     private String filePath;
 
@@ -44,7 +45,7 @@ public class ExcelUtil {
      * 初始化workbook
      */
     public ExcelUtil() {
-        this.xssfWorkbook = new XSSFWorkbook();
+        this.sXSSFWorkbook = new SXSSFWorkbook();
     }
 
     /**
@@ -55,32 +56,14 @@ public class ExcelUtil {
     public ExcelUtil(String filePath) {
         this.filePath = filePath;
         try {
-            this.xssfWorkbook = new XSSFWorkbook(filePath);
+            this.sXSSFWorkbook = new SXSSFWorkbook(new XSSFWorkbook(filePath));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public static void main(String[] args) throws JsonProcessingException {
-//        ExcelUtil excelUtil = new ExcelUtil("/test.xls");
-//        excelUtil.setDestroyWhenCreatedExcel(true);
-//        XSSFSheet sheet1 = excelUtil.initSheet("sheet2", Arrays.asList("姓名", "年龄", "身高"));
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        List<User> userList = objectMapper.readValue("[{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"}]", objectMapper.getTypeFactory().constructParametricType(List.class, User.class));
-//        Supplier<List<User>> userList1 = () -> {
-//            try {
-//                return objectMapper.readValue("[{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"},{\"name\":\"张三\",\"age\":20.0,\"height\":\"175cm\"}]", objectMapper.getTypeFactory().constructParametricType(List.class, User.class));
-//            } catch (JsonProcessingException e) {
-//                e.printStackTrace();
-//            }
-//            return new ArrayList<>();
-//        };
-//        excelUtil.fillData(sheet1, userList1, 1 + userList.size());
-//        excelUtil.createExcel("test", Const.XLS);
-//        List<User> users = excelUtil.document2List(User.class);
-        objs2Excel(() -> Arrays.asList(null, null, User.builder().age(12.0).date(new Date()).name("jack").build(), null, User.builder().name("an").build()),
-                User.class);
-//        objs2Excel(() -> Collections.singletonList(Collections.singletonMap("a", "b")), Map.class);
+
     }
 
     public static <T> void objs2Excel(Supplier<List<T>> dataSupplier, Class<T> clz, Map<String, String> map) {
@@ -91,7 +74,7 @@ public class ExcelUtil {
 
         ExcelUtil excelUtil = new ExcelUtil();
         excelUtil.setDestroyWhenCreatedExcel(true);
-        XSSFSheet sheet = excelUtil.initSheet("sheet1", clz, map);
+        SXSSFSheet sheet = excelUtil.initSheet("sheet1", clz, map);
         excelUtil.fillData(sheet, dataSupplier, columnBeanList.stream().filter(each -> map.containsKey(each.getFieldName())).collect(Collectors.toList()), 0);
         excelUtil.createExcel("./test", Const.XLS);
 
@@ -104,7 +87,7 @@ public class ExcelUtil {
 
         ExcelUtil excelUtil = new ExcelUtil();
         excelUtil.setDestroyWhenCreatedExcel(true);
-        XSSFSheet sheet = excelUtil.initSheet("sheet1", columnBeanList.stream().map(ColumnBean::getFieldName).collect(Collectors.toList()));
+        SXSSFSheet sheet = excelUtil.initSheet("sheet1", columnBeanList.stream().map(ColumnBean::getFieldName).collect(Collectors.toList()));
         excelUtil.fillData(sheet, dataSupplier, columnBeanList, 0);
         excelUtil.createExcel("./test", Const.XLS);
 
@@ -210,8 +193,8 @@ public class ExcelUtil {
      * @param columns sheet的列
      * @return sheet
      */
-    public XSSFSheet initSheet(String title, List<String> columns) {
-        XSSFSheet sheet = this.xssfWorkbook.createSheet(title);
+    public SXSSFSheet initSheet(String title, List<String> columns) {
+        SXSSFSheet sheet = this.sXSSFWorkbook.createSheet(title);
 
         Row row = sheet.createRow(0);
         Iterables.forEach(columns, (i, each) -> {
@@ -224,11 +207,11 @@ public class ExcelUtil {
     /**
      * 初始化sheet
      *
-     * @param title   sheet名
-     * @param clz Class
+     * @param title sheet名
+     * @param clz   Class
      * @return sheet
      */
-    public <T> XSSFSheet initSheet(String title, Class<T> clz) {
+    public <T> SXSSFSheet initSheet(String title, Class<T> clz) {
         List<ColumnBean> columnBeanList = analysisClz(clz, "get");
         return this.initSheet(title, columnBeanList.stream().map(ColumnBean::getFieldName).collect(Collectors.toList()));
     }
@@ -236,12 +219,12 @@ public class ExcelUtil {
     /**
      * 初始化sheet
      *
-     * @param title   sheet名
-     * @param clz Class
-     * @param map 列对照
+     * @param title sheet名
+     * @param clz   Class
+     * @param map   列对照
      * @return sheet
      */
-    public <T> XSSFSheet initSheet(String title, Class<T> clz, Map<String, String> map) {
+    public <T> SXSSFSheet initSheet(String title, Class<T> clz, Map<String, String> map) {
         List<ColumnBean> columnBeanList = analysisClz(clz, "get");
         List<String> columns = new ArrayList<>();
         map.forEach((k, v) -> {
@@ -256,11 +239,11 @@ public class ExcelUtil {
      * 初始化sheet
      *
      * @param title sheet名
-     * @param map 列对照
-     * @param <T> T
+     * @param map   列对照
+     * @param <T>   T
      * @return sheet
      */
-    public <T> XSSFSheet initSheet(String title, Map<String, String> map) {
+    public <T> SXSSFSheet initSheet(String title, Map<String, String> map) {
         return this.initSheet(title, new ArrayList<>(map.values()));
     }
 
@@ -272,8 +255,8 @@ public class ExcelUtil {
      * @param contentStyle 表格头部cell的样式
      * @return sheet
      */
-    public XSSFSheet initSheetWithStyle(String title, List<String> columns, XSSFCellStyle contentStyle) {
-        XSSFSheet sheet = this.xssfWorkbook.createSheet(title);
+    public SXSSFSheet initSheetWithStyle(String title, List<String> columns, XSSFCellStyle contentStyle) {
+        SXSSFSheet sheet = this.sXSSFWorkbook.createSheet(title);
 
         Row row = sheet.createRow(0);
         Iterables.forEach(columns, (i, each) -> {
@@ -291,13 +274,14 @@ public class ExcelUtil {
      * @param dataSupplier 数据
      * @param rowNum       从第几行开始填充
      */
-    public <T> void fillData(XSSFSheet sheet, Supplier<List<T>> dataSupplier, List<ColumnBean> columnBeanList, int rowNum) {
+    public <T> void fillData(SXSSFSheet sheet, Supplier<List<T>> dataSupplier, List<ColumnBean> columnBeanList, int rowNum) {
         List<T> data = dataSupplier.get();
         if (data != null && data.size() > 0) {
             Iterables.forEach(data, (i, each) -> {
                 fillRowData(sheet, rowNum + i, null, each, columnBeanList);
             });
         }
+        actionSheet(sheet);
     }
 
     /**
@@ -307,7 +291,7 @@ public class ExcelUtil {
      * @param rowNum 起始行
      * @param <T>    T
      */
-    public <T> void fillRowData(XSSFSheet sheet, int rowNum, XSSFCellStyle contentStyle, T obj, List<ColumnBean> columnBeanList) {
+    public <T> void fillRowData(SXSSFSheet sheet, int rowNum, XSSFCellStyle contentStyle, T obj, List<ColumnBean> columnBeanList) {
         Row rowBody = sheet.createRow(rowNum + 1);
         if (obj != null) {
             Iterables.forEach(columnBeanList, (i, each) -> {
@@ -359,11 +343,12 @@ public class ExcelUtil {
      * @param rowNum       从第几行开始填充
      * @param contentStyle 每个cell的样式
      */
-    public <T> void fillDataWithStyle(XSSFSheet sheet, Supplier<List<T>> dataSupplier, int rowNum, XSSFCellStyle contentStyle, List<ColumnBean> columnBeanList) {
+    public <T> void fillDataWithStyle(SXSSFSheet sheet, Supplier<List<T>> dataSupplier, int rowNum, XSSFCellStyle contentStyle, List<ColumnBean> columnBeanList) {
         List<T> data = dataSupplier.get();
         Iterables.forEach(data, (i, each) -> {
             fillRowData(sheet, rowNum + i, contentStyle, each, columnBeanList);
         });
+        actionSheet(sheet);
     }
 
     /**
@@ -407,8 +392,8 @@ public class ExcelUtil {
         FileOutputStream outputStream = null;
         try {
             outputStream = new FileOutputStream(file);
-            this.xssfWorkbook.write(outputStream);
-            this.xssfWorkbook.close();
+            this.sXSSFWorkbook.write(outputStream);
+            this.sXSSFWorkbook.close();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -429,10 +414,10 @@ public class ExcelUtil {
      */
     public <T> List<T> document2List(Class<T> clz) {
         Objects.requireNonNull(clz);
-        Objects.requireNonNull(this.xssfWorkbook);
+        Objects.requireNonNull(this.sXSSFWorkbook);
         List<T> result = new ArrayList<>();
-        for (int i = 0; i < this.xssfWorkbook.getNumberOfSheets(); i++) {
-            result.addAll(sheet2List(this.xssfWorkbook.getSheetAt(i), clz, 1));
+        for (int i = 0; i < this.sXSSFWorkbook.getNumberOfSheets(); i++) {
+            result.addAll(sheet2List(this.sXSSFWorkbook.getSheetAt(i), clz, 1));
         }
         return result;
     }
@@ -582,16 +567,32 @@ public class ExcelUtil {
         }
     }
 
+    /**
+     * 关闭流
+     * @param outputStream 输出流
+     */
     public void destroy(FileOutputStream outputStream) {
         try {
             if (outputStream != null) {
                 outputStream.close();
                 outputStream = null;
             }
-            if (this.xssfWorkbook != null) {
-                this.xssfWorkbook.close();
-                this.xssfWorkbook = null;
+            if (this.sXSSFWorkbook != null) {
+                this.sXSSFWorkbook.close();
+                this.sXSSFWorkbook = null;
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 将sheet中内容写入磁盘
+     * @param sheet sheet
+     */
+    public void actionSheet(SXSSFSheet sheet) {
+        try {
+            sheet.flushRows();
         } catch (IOException e) {
             e.printStackTrace();
         }

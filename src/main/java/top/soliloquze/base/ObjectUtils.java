@@ -1,10 +1,18 @@
 package top.soliloquze.base;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.StringUtils;
 
+import java.lang.reflect.AccessibleObject;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author wb
@@ -39,4 +47,21 @@ public class ObjectUtils {
         }
     }
 
+    private static <T> List<ClassDetails> analysisClz(Class<T> clz) {
+
+        List<Field> fieldList = Arrays.stream(clz.getDeclaredFields()).filter(field -> !field.isAccessible()).collect(Collectors.toList());
+        List<Method> methodList = Arrays.stream(clz.getDeclaredMethods()).filter(method -> Modifier.isPublic(method.getModifiers())).collect(Collectors.toList());
+        List<ClassDetails> classDetailsList = new ArrayList<>();
+        fieldList.forEach(field -> {
+            Method setMethod = Iterables.findFirst(methodList, method -> method.getName().equalsIgnoreCase("set" + StringUtils.capitalize(field.getName())));
+            Method getMethod = Iterables.findFirst(methodList, method -> method.getName().equalsIgnoreCase("get" + StringUtils.capitalize(field.getName())));
+            ClassDetails classDetails = ClassDetails.builder().fieldName(field.getName()).type(field.getGenericType()).setMethod(setMethod).getMethod(getMethod).build();
+            classDetailsList.add(classDetails);
+        });
+       return classDetailsList;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(analysisClz(A.class));
+    }
 }
