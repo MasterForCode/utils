@@ -5,13 +5,17 @@ import org.quartz.impl.StdSchedulerFactory;
 import top.soliloquze.base.JsonUtil;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static org.quartz.impl.matchers.GroupMatcher.jobGroupEquals;
 
 /**
  * @author wb
  * @date 2020/1/7
  */
-public enum  SchedulerWrapper {
+public enum SchedulerWrapper {
 
     /**
      * 全局唯一实例
@@ -20,9 +24,12 @@ public enum  SchedulerWrapper {
 
     private static Scheduler scheduler;
 
+    private static Map<String, Status> jobMap = new ConcurrentHashMap<>();
+
     static {
         try {
             scheduler = StdSchedulerFactory.getDefaultScheduler();
+            scheduler.getListenerManager().addJobListener(new WrappedJobListener(jobMap));
             scheduler.start();
         } catch (SchedulerException e) {
             throw new RuntimeException(e);
@@ -94,4 +101,7 @@ public enum  SchedulerWrapper {
         return this;
     }
 
+    public Map<String, Status> getJobMap() {
+        return SchedulerWrapper.jobMap;
+    }
 }

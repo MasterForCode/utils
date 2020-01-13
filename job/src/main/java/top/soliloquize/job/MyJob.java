@@ -12,7 +12,6 @@ import java.util.Calendar;
 public class MyJob implements Job {
     @Override
     public void execute(JobExecutionContext context) {
-        System.out.println(context.getJobDetail().getJobDataMap().get("test"));
         System.out.println(context.getJobDetail().getKey().getName() + "任务正在执行，执行时间: " + Calendar.getInstance().getTime().getSeconds());
     }
 }

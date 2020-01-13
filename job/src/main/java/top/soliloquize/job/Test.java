@@ -17,10 +17,11 @@ public class Test {
         map.put("test", "hi");
         SchedulerWrapper.INSTANCE.put(MyJob.class, JobWrapper.builder().jsonParams(JsonUtil.jsonEx(map)).defaultJobId("job1").defaultTriggerId("trigger1").cronExpression("0/2 * * * * ? ").build())
                 ;
-        Thread.sleep(10000);
+        Thread.sleep(1000);
         SchedulerWrapper.INSTANCE.put(MyJob.class, JobWrapper.builder().defaultJobId("job2").defaultTriggerId("trigger2").cronExpression("0/5 * * * * ? ").build());
 //        schedulerWrapper.pause(JobWrapper.builder().build());
-//        Thread.sleep(10000);
+        Thread.sleep(10000);
+        System.out.println("====");
 //        schedulerWrapper.resume(JobWrapper.builder().build());
     }
 }
